@@ -1,23 +1,17 @@
 package com.gingermadfire.repository;
 
 import com.gingermadfire.persistence.User;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface UserRepository extends JpaRepository<User, Long> {
 
-public interface UserRepository {
 
-    void save(User user);
 
-    void delete(long id);
+    boolean findUserStatus(long id);
 
-    List<User> findAll();
+    void changeUserStatusById(boolean status, long id);
 
-    User findById(long id);
+    void changePasswordById(String password, long id);
 
-    boolean getUserStatus(long id);
-
-    void changePassword(long id);
-
-    void changeEmail(long id);
+    void changeEmailById(String email, long id);
 }

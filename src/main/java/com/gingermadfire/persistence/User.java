@@ -13,16 +13,18 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table()
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotBlank
+    //@Column(name = "first_name")
     private String firstName;
 
     @NotBlank
+   // @Column(name = "first_name")
     private String lastName;
 
     @Email
@@ -31,6 +33,7 @@ public class User {
     @NotBlank
     private String password;
 
+    //@Column(name = "vip_status")
     private boolean vipStatus;
 
 

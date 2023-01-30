@@ -19,6 +19,7 @@
         <postgersql.version>42.5.1</postgersql.version>
         <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
         <lombok.version>1.18.24</lombok.version>
+        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
     </properties>
 
     <dependencies>
@@ -45,9 +46,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.2.0.CR1</version>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
         </dependency>
 
         <dependency>
