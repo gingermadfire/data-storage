@@ -1,8 +1,13 @@
 package com.gingermadfire.controller;
 
+import com.gingermadfire.dto.request.UserRequest;
+import com.gingermadfire.dto.response.UserResponse;
+import com.gingermadfire.persistence.Role;
 import com.gingermadfire.persistence.User;
 import com.gingermadfire.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,22 +19,23 @@ public class UserRestController {
 
     private final UserService userService;
 
-    @GetMapping
-    public User findById(long id) {
+    @GetMapping("/{id}")
+    public UserResponse findById(@PathVariable long id) {
         return userService.findById(id);
     }
 
-    public List<User> findAll() {
+    public List<UserResponse> findAll() {
         return userService.findAll();
     }
 
-    public boolean findStatus(long id) {
-        return userService.findStatus(id);
+    @GetMapping("/{id}/role")
+    public Role findStatus(@PathVariable long id) {
+        return userService.findRole(id);
     }
 
-    @PostMapping
-    public void save(User user) {
-        userService.save(user);
+    @PostMapping("/register")
+    public void save(@RequestBody UserRequest userRequest) {
+        userService.save(userRequest);
     }
 
     @DeleteMapping
@@ -37,16 +43,16 @@ public class UserRestController {
         userService.deleteById(id);
     }
 
-    public void changeStatus(boolean status, long id) {
-        userService.changeStatus(status, id);
+    public void setRole(Role role, long id) {
+        userService.setRole(role, id);
     }
 
     public void changePassword(long id, String previousPassword, String newPassword) {
-        userService.changePassword(id, previousPassword, newPassword);
+        userService.setPassword(id, previousPassword, newPassword);
     }
 
     public void changeEmail(long id, String newEmail) {
-        userService.changeEmail(id, newEmail);
+        userService.setEmail(id, newEmail);
     }
 
 }

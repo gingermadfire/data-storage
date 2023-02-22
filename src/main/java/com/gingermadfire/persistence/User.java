@@ -20,11 +20,11 @@ public class User {
     private long id;
 
     @NotBlank
-    //@Column(name = "first_name")
+    @Column(name = "first_name")
     private String firstName;
 
     @NotBlank
-   // @Column(name = "first_name")
+    @Column(name = "last_name")
     private String lastName;
 
     @Email
@@ -33,8 +33,9 @@ public class User {
     @NotBlank
     private String password;
 
-    //@Column(name = "vip_status")
-    private boolean vipStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
 
 }

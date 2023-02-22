@@ -17,7 +17,11 @@ public class UserFile {
     private long id;
 
     @NotBlank
+    @Column(name = "file_name")
     private String fileName;
 
-    private long userId;
+    private String extension;
+
+    @ManyToOne
+    private User user;
 }
