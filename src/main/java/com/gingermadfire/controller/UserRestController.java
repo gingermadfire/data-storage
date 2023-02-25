@@ -3,11 +3,8 @@ package com.gingermadfire.controller;
 import com.gingermadfire.dto.request.UserRequest;
 import com.gingermadfire.dto.response.UserResponse;
 import com.gingermadfire.persistence.Role;
-import com.gingermadfire.persistence.User;
 import com.gingermadfire.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

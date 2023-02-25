@@ -1,23 +1,28 @@
 package com.gingermadfire.service;
 
-import com.gingermadfire.dto.request.FileRequest;
+import com.gingermadfire.data.DataStorageProperties;
 import com.gingermadfire.dto.response.FileResponse;
-import com.gingermadfire.dto.response.UserResponse;
 import com.gingermadfire.exception.NotFoundException;
 import com.gingermadfire.mapper.FileMapper;
+import com.gingermadfire.persistence.UserFile;
 import com.gingermadfire.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserFileService {
+public class FileService {
 
     private final FileRepository fileRepository;
     private final FileMapper fileMapper;
+    private final DataStorageProperties properties;
     private final UserService userService;
 
     public List<FileResponse> findByUserId(long id) {
@@ -35,9 +40,26 @@ public class UserFileService {
                 .toList();
     }
 
-    public void save(FileRequest fileRequest) {
-        UserResponse response = userService.findById(fileRequest.getUserId());
-        fileRepository.save(fileMapper.map(fileRequest, response));
+    public void save(MultipartFile file) {
+        UserFile userFile = new UserFile();
+
+        userFile.setFileName(file.getOriginalFilename());
+        userFile.setUser(userService.findUser(1L));
+        String[] split = file.getOriginalFilename().split("\\.");
+        userFile.setExtension(split[1]); //todo
+        userFile.setUuid(UUID.randomUUID());
+        File uploadDirectory = new File(properties.getUploadPath());
+
+        if (!uploadDirectory.exists()) {
+            uploadDirectory.mkdir();
+        }
+
+        try {
+            file.transferTo(new File(properties.getUploadPath() + "/" + file.getOriginalFilename()));
+            fileRepository.save(userFile);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void deleteUserFile(String fileName, long id) {

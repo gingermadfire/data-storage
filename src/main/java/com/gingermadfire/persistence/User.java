@@ -1,8 +1,6 @@
 package com.gingermadfire.persistence;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,20 +15,16 @@ import lombok.Setter;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @NotBlank
     @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank
     @Column(name = "last_name")
     private String lastName;
 
-    @Email
     private String email;
 
-    @NotBlank
     private String password;
 
     @Enumerated(EnumType.STRING)

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,11 +16,14 @@ public class UserFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotBlank
-    @Column(name = "file_name")
+    @Column(nullable = false)
     private String fileName;
+
+    @Column(nullable = false)
+    private UUID uuid;
 
     private String extension;
 

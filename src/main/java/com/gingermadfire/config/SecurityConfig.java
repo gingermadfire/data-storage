@@ -1,3 +1,4 @@
+/*
 package com.gingermadfire.config;
 
 import com.gingermadfire.App;
@@ -60,3 +61,4 @@ public class SecurityConfig {
     }
 
 }
+*/
