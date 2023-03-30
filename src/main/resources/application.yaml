@@ -8,6 +8,15 @@ spring:
     hibernate:
       ddl-auto: validate
     open-in-view: false
+  liquibase:
+    change-log:
+    url: jdbc:postgresql://localhost:5432/storage
+    user: postgres
+    password: postgres
 
 data-storage:
   upload-path: C://uploads
+server:
+  error:
+    include-message: always
+    include-exception: true

@@ -11,12 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FileRequest {
 
-    private long id;
+    private Long id;
 
     private String fileName;
 
     private String extension;
 
-    private long userId;
+    private Long userId;
 
 }

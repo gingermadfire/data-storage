@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user_file")
+@Table(name = "user_files")
 public class UserFile {
 
     @Id

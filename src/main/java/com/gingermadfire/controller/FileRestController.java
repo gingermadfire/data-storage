@@ -1,10 +1,8 @@
 package com.gingermadfire.controller;
 
-import com.gingermadfire.data.DataStorageProperties;
 import com.gingermadfire.dto.response.FileResponse;
 import com.gingermadfire.persistence.UserFile;
 import com.gingermadfire.service.FileService;
-import com.gingermadfire.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,16 +17,14 @@ import java.util.List;
 @RequestMapping("/api/v1/files")
 public class FileRestController {
 
-    private final UserService userService;
     private final FileService fileService;
-    private final DataStorageProperties properties;
 
-    @GetMapping
+    @GetMapping()
     public List<FileResponse> findAll() {
         return fileService.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<FileResponse> save(@RequestParam("file") MultipartFile file) {
         fileService.save(file);
 

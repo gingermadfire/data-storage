@@ -1,10 +1,13 @@
 package com.gingermadfire.controller;
 
+import com.gingermadfire.dto.request.UserPasswordChangeRequest;
 import com.gingermadfire.dto.request.UserRequest;
 import com.gingermadfire.dto.response.UserResponse;
 import com.gingermadfire.persistence.Role;
 import com.gingermadfire.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,38 +20,50 @@ public class UserRestController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public UserResponse findById(@PathVariable long id) {
+    @PreAuthorize("hasAuthority('users:read')")
+    public UserResponse findById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
+    @GetMapping
+    @PreAuthorize("hasAuthority('users:read')")
     public List<UserResponse> findAll() {
         return userService.findAll();
     }
 
     @GetMapping("/{id}/role")
-    public Role findStatus(@PathVariable long id) {
+    @PreAuthorize("hasAuthority('users:read')")
+    public Role findStatus(@PathVariable Long id) {
         return userService.findRole(id);
     }
 
     @PostMapping("/register")
-    public void save(@RequestBody UserRequest userRequest) {
-        userService.save(userRequest);
+    @PreAuthorize("hasAuthority('users:write')")
+    public void save(@RequestBody @Valid UserRequest request) {
+        userService.save(request);
     }
 
-    @DeleteMapping
-    public void deleteById(long id) {
+    @DeleteMapping("{id}/delete")
+    @PreAuthorize("hasAuthority('users:delete')")
+    public void deleteById(@PathVariable Long id) {
         userService.deleteById(id);
     }
 
-    public void setRole(Role role, long id) {
+    @PutMapping("{id}/role")
+    @PreAuthorize("hasAuthority('users:put')")
+    public void setRole(@PathVariable Long id,@RequestBody Role role) {
         userService.setRole(role, id);
+    } //TODO
+
+    @PutMapping("/{id}/password")
+    @PreAuthorize("hasAuthority('users:put')")
+    public void changePassword(@PathVariable Long id, @RequestBody @Valid UserPasswordChangeRequest request) {
+        userService.setPassword(id, request);
     }
 
-    public void changePassword(long id, String previousPassword, String newPassword) {
-        userService.setPassword(id, previousPassword, newPassword);
-    }
-
-    public void changeEmail(long id, String newEmail) {
+    @PutMapping("/{id}/mail")
+    @PreAuthorize("hasAuthority('users:put')")
+    public void changeEmail(@PathVariable Long id, String newEmail) {
         userService.setEmail(id, newEmail);
     }
 

@@ -17,18 +17,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(nullable = false)
     private String lastName;
 
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Column(nullable = false)
+    //@OneToMany(fetch = FetchType.LAZY)
     private Role role;
 
 

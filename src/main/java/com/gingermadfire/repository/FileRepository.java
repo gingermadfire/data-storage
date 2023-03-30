@@ -17,4 +17,6 @@ public interface FileRepository extends JpaRepository<UserFile, Long> {
     List<UserFile> findByUserId(@Param("id") long id);
 
     void deleteByFileNameAndUserId(String fileName, long userId);
+
+
 }
