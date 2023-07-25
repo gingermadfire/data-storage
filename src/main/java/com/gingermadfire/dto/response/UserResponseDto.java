@@ -1,4 +1,4 @@
-package com.gingermadfire.dto.request;
+package com.gingermadfire.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,14 +9,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileRequest {
+public class UserResponseDto {
 
     private Long id;
 
-    private String fileName;
+    private String firstName;
 
-    private String extension;
+    private String lastName;
 
-    private Long userId;
-
+    private String email;
 }

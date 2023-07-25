@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequest {
+public class UserRequestDTO {
 
     @NotBlank
     @Size(min = 2)

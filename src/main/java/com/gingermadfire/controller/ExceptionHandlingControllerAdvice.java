@@ -1,9 +1,13 @@
 package com.gingermadfire.controller;
 
+import com.gingermadfire.exception.FileException;
+import com.gingermadfire.exception.JwtAuthenticationException;
 import com.gingermadfire.exception.NotFoundException;
 import com.gingermadfire.exception.PasswordMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -40,9 +44,28 @@ public class ExceptionHandlingControllerAdvice {
     }
 
     @ExceptionHandler(PasswordMismatchException.class)
-    public ResponseEntity<?> handlePasswordMismatchException() {
+    public ResponseEntity<?> handlePasswordMismatchException(PasswordMismatchException e) {
         //TODO:логирование
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Введенный пароль не совпадает");
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(JwtAuthenticationException.class)
+    public ResponseEntity<?> handleJwtAuthenticationException(JwtAuthenticationException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<?> handleUsernameNotFoundException() {
+        return new ResponseEntity<>("Не авторизован", HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<?> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileException.class)
+    public ResponseEntity<?> handleFileException(FileException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.PAYLOAD_TOO_LARGE);
+    }
 }

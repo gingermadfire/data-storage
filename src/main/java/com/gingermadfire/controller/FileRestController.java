@@ -1,10 +1,10 @@
 package com.gingermadfire.controller;
 
-import com.gingermadfire.dto.response.FileResponse;
-import com.gingermadfire.persistence.UserFile;
+import com.gingermadfire.dto.response.FileResponseDto;
 import com.gingermadfire.service.FileService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,29 +20,19 @@ public class FileRestController {
     private final FileService fileService;
 
     @GetMapping()
-    public List<FileResponse> findAll() {
-        return fileService.findAll();
+    public Page<FileResponseDto> findAll(Pageable pageable) {
+        return fileService.findByUserId(pageable);
     }
 
     @PostMapping("/save")
-    public ResponseEntity<FileResponse> save(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<FileResponseDto> save(@RequestParam("file") MultipartFile file) {
         fileService.save(file);
-
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-
-    @DeleteMapping("/{file-name}&{id}")
-    public ResponseEntity<UserFile> deleteUserFile(
-            @Valid @RequestBody @PathVariable("file-name") String fileName,
-            @PathVariable("id") long id) {
-        fileService.deleteUserFile(fileName, id);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-    }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<Long> deleteAll(@Valid @RequestBody @PathVariable long id) {
-        fileService.deleteAllUserFiles(id);
+    @DeleteMapping("/{ids}")
+    public ResponseEntity<Void> deleteUserFile(@PathVariable List<Long> ids) {
+        fileService.delete(ids);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }

@@ -1,16 +1,18 @@
 package com.gingermadfire.persistence;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_files")
 public class UserFile {
 
@@ -18,8 +20,7 @@ public class UserFile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Column(nullable = false)
+    @Column(nullable = false) //TODO: поставить name
     private String fileName;
 
     @Column(nullable = false)
@@ -29,4 +30,8 @@ public class UserFile {
 
     @ManyToOne
     private User user;
+
+    @Column(nullable = false)
+    private String fullName;
+
 }

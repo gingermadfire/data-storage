@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @Entity
@@ -18,7 +19,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String username;
+    private String username; //TODO: make a check for uniqueness
 
     @Column(nullable = false)
     private String firstName;
@@ -35,6 +36,5 @@ public class User {
     @Column(nullable = false)
     //@OneToMany(fetch = FetchType.LAZY)
     private Role role;
-
 
 }

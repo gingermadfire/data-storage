@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileResponse {
+public class FileResponseDto {
 
     private Long id;
 

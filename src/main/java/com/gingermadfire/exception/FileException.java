@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class MissingFileExtensionException extends RuntimeException{
+public class FileException extends RuntimeException{
 
     private final String message;
 }

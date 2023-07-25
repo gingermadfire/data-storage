@@ -16,4 +16,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Role findUserRole(@Param("id") long id);
 
     Optional<User> findByUsername(String username);
+
+    void deleteByUsername(String username);
+
+    @Query("select u.password from User u where u.id = :id")
+    String findUserPasswordById(Long id);
 }

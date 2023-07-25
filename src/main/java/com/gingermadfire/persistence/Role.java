@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 @Getter
 public enum Role {
 
-    USER(Set.of(Permission.USERS_READ)),
-    VIP(Set.of(Permission.USERS_READ, Permission.USERS_WRITE)),
-    ADMIN(Set.of(Permission.USERS_READ, Permission.USERS_WRITE, Permission.USERS_DELETE, Permission.USERS_PUT));
+    USER(Set.of(Permission.USER)),
+    VIP(Set.of(Permission.USER)),
+    ADMIN(Set.of(Permission.USER, Permission.ADMIN));
 
     private final Set<Permission> permissions;
 
